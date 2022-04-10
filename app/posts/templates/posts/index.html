@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blueprint
+{% endblock %}
+
+{% block content_title %}
+Posts
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        {% for post in pages.items %}
+            <p><a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">{{ post.title }}</a></p>
+        {% endfor %}
+        {% for i in range(pages.per_page - pages.items|length) %}
+            <p><br></p>
+        {% endfor %}
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item {% if not pages.has_prev %}} disabled {% endif %}">
+                    <a class="page-link" href="./?page={{pages.prev_num}}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}">Previous</a>
+                </li>
+                {% for page in pages.iter_pages() %}
+                    <li class="page-item {% if page == pages.page %}active{% endif %}">
+                        <a class="page-link" href="./?page={{ page }}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}">{{page}}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item {% if not pages.has_next %}} disabled {% endif %}">
+                    <a class="page-link" href="./?page={{pages.next_num}}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col">
+        <form action="{{ url_for('posts.create_post')}}" method='GET'>
+            <button type="submit" class="btn btn-primary btn-lg">New post</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
