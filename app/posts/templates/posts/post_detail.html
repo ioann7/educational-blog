@@ -21,7 +21,10 @@
                 <p>{{ post.body }}</p>
             </blockquote>
             <figcaption class="blockquote-footer">
-                Created at {{ post.created.strftime('%d %B %Y in %H:%M') }} by <cite title="Source Title">{{ post.author.username }}</cite>
+                Created at {{ post.created.strftime('%d %B %Y in %H:%M') }} by
+                <a href="{{ url_for('users', username=post.author.username) }}">
+                    <i>{{ post.author.username }}</i>
+                </a>
             </figcaption>
         </figure>
     </div>
