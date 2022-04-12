@@ -12,7 +12,7 @@ Posts
 <div class="row">
     <div class="col">
         {% for post in pages.items %}
-            <p><a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">{{ post.title }}</a></p>
+            {% include 'posts/_post.html' %}
         {% endfor %}
         {% for i in range(pages.per_page - pages.items|length) %}
             <p><br></p>

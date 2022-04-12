@@ -34,7 +34,6 @@ def create_post():
 @login_required
 def edit_post(slug):
     post = Post.query.filter((Post.slug == slug) & (Post.user_id == current_user.id)).first_or_404()
-    form = PostForm(obj=post)
     if request.method == 'POST':
         form = PostForm(formdata=request.form, obj=post)
         form.populate_obj(post)

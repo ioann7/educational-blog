@@ -2,6 +2,7 @@ import app.routes
 
 
 from app import app
+from app import errors
 
 from app.posts.blueprint import posts
 

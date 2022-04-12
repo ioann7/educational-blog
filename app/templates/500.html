@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Page not found (404)
+    An unexpected error has occurred (500)
 {% endblock %}
 
 {% block content_title %}
-    Page not found (404)
+    An unexpected error has occurred (500)
 {% endblock %}
 
 {% block content %}
-    Try to use search form
+    The administrator has been notified. Sorry for the inconvenience!
     <form action="{{ url_for('index')}}" method='GET'>
         <button type="submit" class="btn btn-primary">Back</button>
     </form>

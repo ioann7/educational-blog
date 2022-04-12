@@ -10,15 +10,6 @@ New post
 
 {% block content %}
 <div class="col-md-6">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    {% endwith %}
     <form action="{{ url_for('posts.create_post') }}" method="POST">
         {{ form.hidden_tag() }}
         <p>
