@@ -9,22 +9,31 @@
         <div class="col">
             <table>
                 <tr>
-                    <td align="middle"><img src="{{ user.avatar(128) }}"></td>
+                    <td valign="top"><img src="{{ user.avatar(128) }}"></td>
                     <td class="ml-1">
                         <h1>User: {{ user.username }}</h1>
-                        {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                        <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                         {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                        {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                     </td>
                 </tr>
             </table>
         </div>
-        {% if current_user.username == user.username %}
         <div class="col">
+            {% if current_user.username == user.username %}
             <form action="{{ url_for('edit_profile', username=current_user.username)}}" method='GET'>
                 <button type="submit" class="btn btn-primary btn-lg">Edit profile</button>
             </form>
+            {% elif current_user.is_following(user) %}
+            <form action="{{ url_for('unfollow', username=user.username)}}" method='GET'>
+                <button type="submit" class="btn btn-secondary btn-lg">Unfollow</button>
+            </form>
+            {% else %}
+            <form action="{{ url_for('follow', username=user.username)}}" method='GET'>
+                <button type="submit" class="btn btn-primary btn-lg">Follow</button>
+            </form>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 
     {% for post in posts %}
