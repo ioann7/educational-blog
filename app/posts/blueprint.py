@@ -47,14 +47,17 @@ def edit_post(slug):
 def index():
     q = request.args.get('q')
     page = request.args.get('page')
+    followed_posts = request.args.get('followed_posts')
+    posts = Post.query
     if page and page.isdigit():
         page = int(page)
     else:
         page = 1
+    if current_user.is_authenticated and followed_posts and followed_posts.isdigit() and int(followed_posts) == 1:
+        posts = current_user.followed_posts()
     if q:
-        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q))
-    else:
-        posts = Post.query.order_by(Post.created.desc())
+        posts = posts.filter(Post.title.contains(q) | Post.body.contains(q))
+    posts = posts.order_by(Post.created.desc())
     pages = posts.paginate(page=page, per_page=5)
     return render_template('posts/index.html', pages=pages)
 

@@ -5,7 +5,7 @@ Blueprint
 {% endblock %}
 
 {% block content_title %}
-Posts
+<a class="text-dark" href="./">All posts</a> | <a class="text-dark" href="./?followed_posts=1">Followed posts</a>
 {% endblock %}
 
 {% block content %}
@@ -20,15 +20,15 @@ Posts
         <nav aria-label="...">
             <ul class="pagination">
                 <li class="page-item {% if not pages.has_prev %}} disabled {% endif %}">
-                    <a class="page-link" href="./?page={{pages.prev_num}}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}">Previous</a>
+                    <a class="page-link" href="./?page={{pages.prev_num}}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}{% if request.args.get('followed_posts') %}&followed_posts={{request.args['followed_posts']}}{% endif %}">Previous</a>
                 </li>
                 {% for page in pages.iter_pages() %}
                     <li class="page-item {% if page == pages.page %}active{% endif %}">
-                        <a class="page-link" href="./?page={{ page }}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}">{{page}}</a>
+                        <a class="page-link" href="./?page={{ page }}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}{% if request.args.get('followed_posts') %}&followed_posts={{request.args['followed_posts']}}{% endif %}">{{page}}</a>
                     </li>
                 {% endfor %}
                 <li class="page-item {% if not pages.has_next %}} disabled {% endif %}">
-                    <a class="page-link" href="./?page={{pages.next_num}}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}">Next</a>
+                    <a class="page-link" href="./?page={{pages.next_num}}{% if request.args.get('q') %}&q={{request.args['q']}}{% endif %}{% if request.args.get('followed_posts') %}&followed_posts={{request.args['followed_posts']}}{% endif %}">Next</a>
                 </li>
             </ul>
         </nav>
