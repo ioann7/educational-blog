@@ -1,6 +1,5 @@
 import logging
 import os.path
-import smtplib
 from logging.handlers import RotatingFileHandler
 
 from app.ssl_smtp_handler import SSLSMTPHandler
@@ -10,6 +9,7 @@ from .config import Configuration
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_mail import Mail
 
 
 app = Flask(__name__)
@@ -19,9 +19,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
 login = LoginManager(app)
 login.login_view = 'login'
-smtp = smtplib.SMTP_SSL(app.config['MAIL_SERVER'], app.config['MAIL_PORT'])
-if app.config['MAIL_USERNAME']:
-    smtp.login(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
+mail = Mail(app)
 
 
 if not app.debug:
