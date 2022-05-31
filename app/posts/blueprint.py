@@ -47,14 +47,10 @@ def edit_post(slug):
 @posts.route('/')
 def index():
     q = request.args.get('q')
-    page = request.args.get('page')
-    followed_posts = request.args.get('followed_posts')
+    page = request.args.get('page', 1, type=int)
+    followed_posts = request.args.get('followed_posts', 0, type=int)
     posts = Post.query
-    if page and page.isdigit():
-        page = int(page)
-    else:
-        page = 1
-    if current_user.is_authenticated and followed_posts and followed_posts.isdigit() and int(followed_posts) == 1:
+    if current_user.is_authenticated and followed_posts == 1:
         posts = current_user.followed_posts()
     if q:
         posts = posts.filter(Post.title.contains(q) | Post.body.contains(q))
