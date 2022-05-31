@@ -9,6 +9,7 @@ from flask_login import login_required, current_user
 from app.models import Post, Tag, slugify
 from .forms import PostForm
 from app import db
+from app import app
 
 posts = Blueprint('posts', __name__, template_folder='templates')
 
@@ -58,7 +59,7 @@ def index():
     if q:
         posts = posts.filter(Post.title.contains(q) | Post.body.contains(q))
     posts = posts.order_by(Post.created.desc())
-    pages = posts.paginate(page=page, per_page=5)
+    pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
     return render_template('posts/index.html', pages=pages)
 
 
