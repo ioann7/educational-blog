@@ -13,7 +13,7 @@
                     <td class="ml-1">
                         <h1>User: {{ user.username }}</h1>
                         <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-                        {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                        {% if user.last_seen %}<p>Last seen: {{ moment(user.last_seen).fromNow() }}</p>{% endif %}
                         {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                     </td>
                 </tr>

@@ -1,8 +1,18 @@
 <table>
     <tr>
-        <td valign="middle"><img src="{{ post.author.avatar(36) }}"></td>
-        <td><a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a><br>
-            by <a href="{{ url_for('users', username=post.author.username) }}"><i>{{ post.author.username }}</i></a>
+        <td valign="middle"><img src="{{ post.author.avatar(64) }}"></td>
+        <td>
+            <figure>
+                <blockquote class="blockquote">
+                    <a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                Created {{ moment(post.created).format('LLL') }} by
+                <a href="{{ url_for('users', username=post.author.username) }}">
+                    <i>{{ post.author.username }}</i>
+                </a>
+                </figcaption>
+            </figure>
         </td>
     </tr>
 </table>
